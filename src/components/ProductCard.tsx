@@ -12,6 +12,7 @@ interface ProductCardProps {
 export default function ProductCard({ product, isMenuOpen = false }: ProductCardProps) {
   const { addToCart } = useCart();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const [isFlying, setIsFlying] = useState(false);
   const [flyPosition, setFlyPosition] = useState({ x: 0, y: 0, targetX: 0, targetY: 0 });
   const [isZoomed, setIsZoomed] = useState(false);
@@ -19,10 +20,12 @@ export default function ProductCard({ product, isMenuOpen = false }: ProductCard
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const nextImage = () => {
+    setSlideDirection('left');
     setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
   };
 
   const prevImage = () => {
+    setSlideDirection('right');
     setCurrentImageIndex((prev) => (prev - 1 + product.images.length) % product.images.length);
   };
 
@@ -151,10 +154,16 @@ export default function ProductCard({ product, isMenuOpen = false }: ProductCard
       <div className={`group cursor-pointer transition-all duration-300 hover:scale-[1.02] border border-pink-100 border-t-4 border-t-pink-500 rounded-3xl bg-white shadow-sm hover:shadow-lg pb-4 mt-3 ${isMenuOpen ? 'blur-sm pointer-events-none' : ''}`}>
         <div className="relative overflow-hidden mb-4 sm:mb-6 rounded-2xl shadow-sm group-hover:shadow-md transition-all duration-300">
         <img
+          key={currentImageIndex}
           src={product.images[currentImageIndex]}
           alt={product.name}
-          className="w-full h-[250px] sm:h-[350px] object-cover transition-transform duration-500 group-hover:scale-110 cursor-pointer"
+          className={`w-full h-[250px] sm:h-[350px] object-cover cursor-pointer ${
+            slideDirection ? '' : 'transition-transform duration-500 group-hover:scale-110'
+          } ${
+            slideDirection === 'left' ? 'slide-in-left' : slideDirection === 'right' ? 'slide-in-right' : ''
+          }`}
           onClick={() => setIsZoomed(true)}
+          onAnimationEnd={() => setSlideDirection(null)}
         />
         {product.images.length > 1 && (
           <>
