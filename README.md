@@ -99,7 +99,7 @@ npm run dev
 
 ## Deployment
 
-Live Demo: [https://prinzfashion.vercel.app](https://prinzfashion.vercel.app)
+Live Demo: [https://wigseller.vercel.app](https://wigseller.vercel.app)
 
 This project is deployed on Vercel (automatic deployment from GitHub).
 
