@@ -1,4 +1,4 @@
-# Fashion L - Premium Wig E-commerce
+Premium Wig E-commerce
 
 A modern, responsive e-commerce store built with Next.js 16 and React 19, featuring a premium wig and hair product catalog with shopping cart functionality and WhatsApp-based checkout.
 
